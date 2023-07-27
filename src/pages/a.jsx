@@ -11,15 +11,15 @@ import Collections from "../domain/collections"
 import Customers from "../domain/customers"
 import Discounts from "../domain/discounts"
 import GiftCards from "../domain/gift-cards"
-import Inventory from "../domain/inventory"
 import Oauth from "../domain/oauth"
 import Orders from "../domain/orders"
 import DraftOrders from "../domain/orders/draft-orders"
 import Pricing from "../domain/pricing"
 import ProductsRoute from "../domain/products"
 import PublishableApiKeys from "../domain/publishable-api-keys"
-import SalesChannels from "../domain/sales-channels"
 import Settings from "../domain/settings"
+// import SalesChannels from "../domain/sales-channels"
+// import Inventory from "../domain/inventory"
 
 const IndexPage = () => {
   const navigate = useNavigate()
@@ -50,12 +50,12 @@ const DashboardRoutes = () => {
             <Route path="customers/*" element={<Customers />} />
             <Route path="pricing/*" element={<Pricing />} />
             <Route path="settings/*" element={<Settings />} />
-            <Route path="sales-channels/*" element={<SalesChannels />} />
+            {/* <Route path="sales-channels/*" element={<SalesChannels />} /> */}
             <Route
               path="publishable-api-keys/*"
               element={<PublishableApiKeys />}
             />
-            <Route path="inventory/*" element={<Inventory />} />
+            {/* <Route path="inventory/*" element={<Inventory />} /> */}
           </Routes>
         </Layout>
       </DndProvider>
