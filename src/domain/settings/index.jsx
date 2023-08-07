@@ -42,19 +42,19 @@ const SettingsIndex = () => {
         icon={<CrosshairIcon />}
         to={`/a/settings/details`}
       />
-      <SettingsCard
+      {/* <SettingsCard
         heading={"Shipping"}
         description={"Manage shipping profiles"}
         icon={<TruckIcon />}
         to={`/a/settings/shipping-profiles`}
         disabled={true}
-      />
-      <SettingsCard
+      /> */}
+      {/* <SettingsCard
         heading={"Return Reasons"}
         description={"Manage Order settings"}
         icon={<DollarSignIcon />}
         to={`/a/settings/return-reasons`}
-      />
+      /> */}
       <SettingsCard
         heading={"The Team"}
         description={"Manage users of your Medusa Store"}
@@ -68,33 +68,33 @@ const SettingsIndex = () => {
         to={`/a/settings/personal-information`}
       />
       <SettingsCard
-        heading={"hello@medusajs.com"}
+        heading={"vanthuanjw@gmail.com"}
         description={"Can’t find the answers you’re looking for?"}
         icon={<MailIcon />}
-        externalLink={"mailto: hello@medusajs.com"}
+        externalLink={"mailto: vanthuanjw@gmail.com"}
       />
-      <SettingsCard
+      {/* <SettingsCard
         heading={"Tax Settings"}
         description={"Manage taxes across regions and products"}
         icon={<TaxesIcon />}
         to={`/a/settings/taxes`}
-      />
-      <FeatureToggle featureFlag="sales_channels">
+      /> */}
+      {/* <FeatureToggle featureFlag="sales_channels">
         <SettingsCard
           heading={"Sales channels"}
           description={"Control which products are available in which channels"}
           icon={<ChannelsIcon />}
           to={`/a/sales-channels`}
         />
-      </FeatureToggle>
-      <FeatureToggle featureFlag="publishable_api_keys">
+      </FeatureToggle> */}
+      {/* <FeatureToggle featureFlag="publishable_api_keys">
         <SettingsCard
           heading={"API key management"}
           description={"Create and manage API keys"}
           icon={<KeyIcon />}
           to={`/a/publishable-api-keys`}
         />
-      </FeatureToggle>
+      </FeatureToggle> */}
     </SettingsOverview>
   )
 }

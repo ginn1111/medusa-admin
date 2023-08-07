@@ -172,18 +172,18 @@ const CustomerTable = () => {
             return (
               <Table.Row
                 color={"inherit"}
-                actions={[
-                  {
-                    label: "Edit",
-                    onClick: () => navigate(row.original.id),
-                    icon: <EditIcon size={20} />,
-                  },
-                  {
-                    label: "Details",
-                    onClick: () => navigate(row.original.id),
-                    icon: <DetailsIcon size={20} />,
-                  },
-                ]}
+                // actions={[
+                //   {
+                //     label: "Edit",
+                //     onClick: () => navigate(row.original.id),
+                //     icon: <EditIcon size={20} />,
+                //   },
+                //   {
+                //     label: "Details",
+                //     onClick: () => navigate(row.original.id),
+                //     icon: <DetailsIcon size={20} />,
+                //   },
+                // ]}
                 linkTo={row.original.id}
                 {...row.getRowProps()}
               >

@@ -116,15 +116,15 @@ const CustomerOrdersTable = ({ id }: Props) => {
               return (
                 <Table.Row
                   forceDropdown
-                  actions={[
-                    {
-                      label: "Transfer order",
-                      icon: <RefreshIcon size={"20"} />,
-                      onClick: () => {
-                        setSelectedOrderForTransfer(row.original as Order)
-                      },
-                    },
-                  ]}
+                  // actions={[
+                  //   {
+                  //     label: "Transfer order",
+                  //     icon: <RefreshIcon size={"20"} />,
+                  //     onClick: () => {
+                  //       setSelectedOrderForTransfer(row.original as Order)
+                  //     },
+                  //   },
+                  // ]}
                   {...row.getRowProps()}
                   linkTo={`/a/orders/${row.original.id}`}
                 >

@@ -9,6 +9,7 @@ import { Option, ShippingOptionPriceType } from "../../../../../types/shared"
 import FormValidator from "../../../../../utils/form-validator"
 import PriceFormInput from "../../../../products/components/prices-form/price-form-input"
 import { useShippingOptionFormData } from "./use-shipping-option-form-data"
+import { useEffect } from "react"
 
 type Requirement = {
   amount: number | null
@@ -45,6 +46,12 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
   const { shippingProfileOptions, fulfillmentOptions } =
     useShippingOptionFormData(region.id)
 
+  useEffect(() => {
+    if (shippingProfileOptions?.length) {
+      form.setValue("shipping_profile", shippingProfileOptions[0])
+    }
+  }, [JSON.stringify(shippingProfileOptions)])
+
   return (
     <div>
       <div>
@@ -64,7 +71,7 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
           </p>
         </div>
       </div>
-      <div className="h-px w-full bg-grey-20 my-xlarge" />
+      <div className="my-xlarge h-px w-full bg-grey-20" />
       <div>
         <h3 className="inter-base-semibold mb-base">Details</h3>
         <div className="grid grid-cols-2 gap-large">
@@ -142,7 +149,7 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
 
           {!isEdit && (
             <>
-              <Controller
+              {/* <Controller
                 control={control}
                 name="shipping_profile"
                 render={({ field }) => {
@@ -157,7 +164,7 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
                     />
                   )
                 }}
-              />
+              /> */}
               <Controller
                 control={control}
                 name="fulfillment_provider"
@@ -178,7 +185,7 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
           )}
         </div>
       </div>
-      <div className="h-px w-full bg-grey-20 my-xlarge" />
+      <div className="my-xlarge h-px w-full bg-grey-20" />
       <div>
         <h3 className="inter-base-semibold mb-base">Requirements</h3>
         <div className="grid grid-cols-2 gap-large">

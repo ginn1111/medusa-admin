@@ -36,10 +36,10 @@ export const useCustomerColumns = () => {
           <div className="text-right">{value?.length || 0}</div>
         ),
       },
-      {
-        Header: "",
-        accessor: "col-2",
-      },
+      // {
+      //   Header: "",
+      //   accessor: "col-2",
+      // },
     ],
     []
   )

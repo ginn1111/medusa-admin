@@ -40,6 +40,11 @@ const CreateShippingOptionModal = ({ open, onClose, region }: Props) => {
       data.fulfillment_provider!.value
     )
 
+    console.log(
+      "🚀 ~ file: create-shipping-option-modal.tsx:40 ~ onSubmit ~ data:",
+      data
+    )
+
     mutate(
       {
         is_return: false,
@@ -76,7 +81,7 @@ const CreateShippingOptionModal = ({ open, onClose, region }: Props) => {
             <ShippingOptionForm form={form} region={region} />
           </Modal.Content>
           <Modal.Footer>
-            <div className="w-full flex items-center gap-x-xsmall justify-end">
+            <div className="flex w-full items-center justify-end gap-x-xsmall">
               <Button
                 variant="secondary"
                 size="small"

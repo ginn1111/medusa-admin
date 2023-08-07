@@ -1,4 +1,10 @@
-import { Address, ClaimOrder, Fulfillment, Swap } from "@medusajs/medusa"
+import {
+  Address,
+  ClaimOrder,
+  Fulfillment,
+  OrderStatus,
+  Swap,
+} from "@medusajs/medusa"
 import { capitalize, sum } from "lodash"
 import {
   useAdminCancelOrder,
@@ -225,45 +231,45 @@ const OrderDetails = () => {
       icon: <DetailsIcon size={"20"} />,
       onClick: () => navigate(`/a/customers/${order?.customer.id}`),
     },
-    {
-      label: "Transfer ownership",
-      icon: <RefreshIcon size={"20"} />,
-      onClick: () => toggleTransferOrderModal(),
-    },
+    // {
+    //   label: "Transfer ownership",
+    //   icon: <RefreshIcon size={"20"} />,
+    //   onClick: () => toggleTransferOrderModal(),
+    // },
   ]
 
-  customerActionables.push({
-    label: "Edit Shipping Address",
-    icon: <TruckIcon size={"20"} />,
-    onClick: () =>
-      setAddressModal({
-        address: order?.shipping_address,
-        type: AddressType.SHIPPING,
-      }),
-  })
+  // customerActionables.push({
+  //   label: "Edit Shipping Address",
+  //   icon: <TruckIcon size={"20"} />,
+  //   onClick: () =>
+  //     setAddressModal({
+  //       address: order?.shipping_address,
+  //       type: AddressType.SHIPPING,
+  //     }),
+  // })
 
-  customerActionables.push({
-    label: "Edit Billing Address",
-    icon: <DollarSignIcon size={"20"} />,
-    onClick: () => {
-      setAddressModal({
-        address: order?.billing_address,
-        type: AddressType.BILLING,
-      })
-    },
-  })
+  // customerActionables.push({
+  //   label: "Edit Billing Address",
+  //   icon: <DollarSignIcon size={"20"} />,
+  //   onClick: () => {
+  //     setAddressModal({
+  //       address: order?.billing_address,
+  //       type: AddressType.BILLING,
+  //     })
+  //   },
+  // })
 
-  if (order?.email) {
-    customerActionables.push({
-      label: "Edit Email Address",
-      icon: <MailIcon size={"20"} />,
-      onClick: () => {
-        setEmailModal({
-          email: order?.email,
-        })
-      },
-    })
-  }
+  // if (order?.email) {
+  //   customerActionables.push({
+  //     label: "Edit Email Address",
+  //     icon: <MailIcon size={"20"} />,
+  //     onClick: () => {
+  //       setEmailModal({
+  //         email: order?.email,
+  //       })
+  //     },
+  //   })
+  // }
 
   if (!order && isLoading) {
     return (
@@ -291,7 +297,7 @@ const OrderDetails = () => {
           </BodyCard>
         ) : (
           <>
-            <div className="flex space-x-4">
+            <div className="flex items-start space-x-4">
               <div className="flex h-full w-7/12 flex-col">
                 <BodyCard
                   className={"mb-4 min-h-[200px] w-full"}
@@ -453,11 +459,13 @@ const OrderDetails = () => {
                     <PaymentStatusComponent status={order.payment_status} />
                   }
                   customActionable={
-                    <PaymentActionables
-                      order={order}
-                      capturePayment={capturePayment}
-                      showRefundMenu={() => setShowRefund(true)}
-                    />
+                    order.status !== "canceled" && (
+                      <PaymentActionables
+                        order={order}
+                        capturePayment={capturePayment}
+                        showRefundMenu={() => setShowRefund(true)}
+                      />
+                    )
                   }
                 >
                   <div className="mt-6">
@@ -471,7 +479,7 @@ const OrderDetails = () => {
                             "DD MMM YYYY hh:mm"
                           )}`}
                         />
-                        {!!payment.amount_refunded && (
+                        {/* {!!payment.amount_refunded && (
                           <div className="mt-4 flex justify-between">
                             <div className="flex">
                               <div className="mr-2 text-grey-40">
@@ -494,7 +502,7 @@ const OrderDetails = () => {
                               </div>
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                     ))}
                     <div className="mt-4 flex justify-between">
@@ -563,6 +571,10 @@ const OrderDetails = () => {
                     </div>
                   </div>
                 </BodyCard>
+              </div>
+
+              {/* <Timeline orderId={order.id} /> */}
+              <div className="flex w-5/12 flex-col">
                 <BodyCard
                   className={"mb-4 h-auto min-h-0 w-full"}
                   title="Customer"
@@ -593,7 +605,7 @@ const OrderDetails = () => {
                         )}
                       </div>
                     </div>
-                    <div className="mt-6 flex space-x-6 divide-x">
+                    <div className="mt-6 flex flex-col space-y-6 divide-y">
                       <div className="flex flex-col">
                         <div className="inter-small-regular mb-1 text-grey-50">
                           Contact
@@ -614,11 +626,8 @@ const OrderDetails = () => {
                     </div>
                   </div>
                 </BodyCard>
-                <div className="mt-large">
-                  <RawJSON data={order} title="Raw order" />
-                </div>
+                <RawJSON data={order} title="Raw order" />
               </div>
-              <Timeline orderId={order.id} />
             </div>
             {addressModal && (
               <AddressModal

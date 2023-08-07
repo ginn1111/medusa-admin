@@ -41,10 +41,20 @@ export const FeatureFlagProvider = ({ children }) => {
     ])
   }, [isFetching, store, user, isLoading])
 
-  const featureToggleList = featureFlags.reduce(
-    (acc, flag) => ({ ...acc, [flag.key]: flag.value }),
-    {}
-  )
+  // const featureToggleList = featureFlags.reduce(
+  //   (acc, flag) => ({ ...acc, [flag.key]: flag.value }),
+  //   {}
+  // )
+
+  const featureToggleList = {
+    analytics: false,
+    cacheService: true,
+    eventBus: true,
+    order_editing: false,
+    product_categories: false,
+    publishable_api_keys: false,
+    sales_channels: false,
+  }
 
   const isFeatureEnabled = (flag: string) => !!featureToggleList[flag]
 

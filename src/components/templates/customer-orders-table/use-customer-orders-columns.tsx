@@ -7,6 +7,7 @@ import { stringDisplayPrice } from "../../../utils/prices"
 import Tooltip from "../../atoms/tooltip"
 import ImagePlaceholder from "../../fundamentals/image-placeholder"
 import StatusIndicator from "../../fundamentals/status-indicator"
+import { DisplayTotalAmount } from "../../../domain/orders/details/templates/display-total"
 
 const decidePaymentStatus = (status: string) => {
   switch (status) {
@@ -78,7 +79,7 @@ export const useCustomerOrdersColumns = (): Column<Order>[] => {
                 {visibleItems.map((item) => {
                   return (
                     <Tooltip content={item.title} key={item.id}>
-                      <div className="h-[35px] w-[25px] flex items-center justify-center rounded-rounded overflow-hidden">
+                      <div className="flex h-[35px] w-[25px] items-center justify-center overflow-hidden rounded-rounded">
                         {item.thumbnail ? (
                           <img
                             className="object-cover"
@@ -94,7 +95,7 @@ export const useCustomerOrdersColumns = (): Column<Order>[] => {
                 })}
               </div>
               {remainder > 0 && (
-                <span className="text-grey-40 inter-small-regular">
+                <span className="inter-small-regular text-grey-40">
                   + {remainder} more
                 </span>
               )}
@@ -125,7 +126,7 @@ export const useCustomerOrdersColumns = (): Column<Order>[] => {
       },
       {
         Header: () => <div className="text-right">Total</div>,
-        accessor: "total",
+        accessor: "payments",
         Cell: ({
           value,
           row: {
@@ -133,11 +134,19 @@ export const useCustomerOrdersColumns = (): Column<Order>[] => {
           },
         }) => {
           return (
-            <div className="text-right">
-              {stringDisplayPrice({
-                amount: value,
+            <div className="flex justify-end">
+              <DisplayTotalAmount
+                currency={currency_code}
+                totalAmount={value.reduce((acc: number, next) => {
+                  return acc + next.amount
+                }, 0)}
+              />
+              {/* {stringDisplayPrice({
+                amount: value.reduce((acc: number, next) => {
+                  return acc + next.amount
+                }, 0),
                 currencyCode: currency_code,
-              })}
+              })} */}
             </div>
           )
         },
