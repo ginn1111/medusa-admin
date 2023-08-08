@@ -558,9 +558,9 @@ const OrderDetails = () => {
                         <span className="inter-small-regular mt-2 text-grey-90">
                           {method?.shipping_option?.name || ""}
                         </span>
-                        <div className="mt-4 flex w-full flex-grow items-center">
+                        {/* <div className="mt-4 flex w-full flex-grow items-center">
                           <JSONView data={method?.data} />
-                        </div>
+                        </div> */}
                       </div>
                     ))}
                     <div className="inter-small-regular mt-6 ">
@@ -630,7 +630,7 @@ const OrderDetails = () => {
                     </div>
                   </div>
                 </BodyCard>
-                <RawJSON data={order} title="Raw order" />
+                {/* <RawJSON data={order} title="Raw order" /> */}
               </div>
             </div>
             {addressModal && (
