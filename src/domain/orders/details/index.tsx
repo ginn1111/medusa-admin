@@ -315,15 +315,19 @@ const OrderDetails = () => {
                     "D MMMM YYYY hh:mm a"
                   )}
                   status={<OrderStatusComponent status={order.status} />}
-                  forceDropdown={true}
-                  actionables={[
-                    {
-                      label: "Cancel Order",
-                      icon: <CancelIcon size={"20"} />,
-                      variant: "danger",
-                      onClick: () => handleDeleteOrder(),
-                    },
-                  ]}
+                  forceDropdown={order.status === "pending"}
+                  actionables={
+                    order.status === "pending"
+                      ? [
+                          {
+                            label: "Cancel Order",
+                            icon: <CancelIcon size={"20"} />,
+                            variant: "danger",
+                            onClick: () => handleDeleteOrder(),
+                          },
+                        ]
+                      : []
+                  }
                 >
                   <div className="mt-6 flex space-x-6 divide-x">
                     <div className="flex flex-col">
