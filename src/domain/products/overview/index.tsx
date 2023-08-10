@@ -62,7 +62,7 @@ const Overview = () => {
       case "products":
         return (
           <div className="flex space-x-2">
-            <Button
+            {/* <Button
               variant="secondary"
               size="small"
               onClick={() => openImportModal()}
@@ -77,7 +77,7 @@ const Overview = () => {
             >
               <ExportIcon size={20} />
               Export Products
-            </Button>
+            </Button> */}
             <Button
               variant="secondary"
               size="small"
@@ -166,7 +166,7 @@ const Overview = () => {
         <div className="flex w-full grow flex-col">
           <BodyCard
             forceDropdown={false}
-            // customActionable={CurrentAction()}
+            customActionable={CurrentAction()}
             customHeader={
               <TableViewHeader
                 views={VIEWS}
