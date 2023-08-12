@@ -271,6 +271,9 @@ const OrderDetails = () => {
   //   })
   // }
 
+
+  const canCancel = order?.status === "pending" && order?.payment_status === 'awaiting'
+
   if (!order && isLoading) {
     return (
       <div className="flex h-full w-full items-center justify-center">
@@ -315,17 +318,16 @@ const OrderDetails = () => {
                     "D MMMM YYYY hh:mm a"
                   )}
                   status={<OrderStatusComponent status={order.status} />}
-                  forceDropdown={order.status === "pending"}
+                  forceDropdown={canCancel}
                   actionables={
-                    order.status === "pending"
-                      ? [
-                          {
-                            label: "Cancel Order",
-                            icon: <CancelIcon size={"20"} />,
-                            variant: "danger",
-                            onClick: () => handleDeleteOrder(),
-                          },
-                        ]
+                    canCancel ? [
+                      {
+                        label: "Cancel Order",
+                        icon: <CancelIcon size={"20"} />,
+                        variant: "danger",
+                        onClick: () => handleDeleteOrder(),
+                      },
+                    ]
                       : []
                   }
                 >
@@ -368,11 +370,11 @@ const OrderDetails = () => {
                       actionables={
                         isFeatureEnabled("order_editing")
                           ? [
-                              {
-                                label: "Edit Order",
-                                onClick: showModal,
-                              },
-                            ]
+                            {
+                              label: "Edit Order",
+                              onClick: showModal,
+                            },
+                          ]
                           : undefined
                       }
                     >
@@ -602,7 +604,7 @@ const OrderDetails = () => {
                             {order.shipping_address.city},{" "}
                             {
                               isoAlpha2Countries[
-                                order.shipping_address.country_code?.toUpperCase()
+                              order.shipping_address.country_code?.toUpperCase()
                               ]
                             }
                           </span>

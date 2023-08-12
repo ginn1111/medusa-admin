@@ -3,11 +3,6 @@ import React from "react"
 import StatusDot from "../../../../components/fundamentals/status-indicator"
 
 export const OrderStatusComponent = ({ status }) => {
-  console.log(
-    "🚀 ~ file: order-status.tsx:6 ~ OrderStatusComponent ~ status:",
-    status
-  )
-
   switch (status) {
     case "completed":
       return <StatusDot title="Completed" variant="success" />
