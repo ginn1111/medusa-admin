@@ -202,7 +202,7 @@ const NewProduct = ({ onClose }: Props) => {
                     form={nestedForm(form, "general")}
                     requireHandle={false}
                   />
-                  <DiscountableForm form={nestedForm(form, "discounted")} />
+                  {/* <DiscountableForm form={nestedForm(form, "discounted")} /> */}
                 </div>
               </Accordion.Item>
               <Accordion.Item title="Organize" value="organize">
@@ -296,14 +296,14 @@ const createPayload = (
     mid_code: data.customs.mid_code || undefined,
     type: data.organize.type
       ? {
-          value: data.organize.type.label,
-          id: data.organize.type.value,
-        }
+        value: data.organize.type.label,
+        id: data.organize.type.value,
+      }
       : undefined,
     tags: data.organize.tags
       ? data.organize.tags.map((t) => ({
-          value: t,
-        }))
+        value: t,
+      }))
       : undefined,
     origin_country: data.customs.origin_country?.value || undefined,
     options: data.variants.options.map((o) => ({

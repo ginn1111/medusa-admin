@@ -36,12 +36,12 @@ const SettingsIndex = () => {
         icon={<CoinsIcon />}
         to={`/a/settings/currencies`}
       />
-      <SettingsCard
+      {/* <SettingsCard
         heading={"Store Details"}
         description={"Manage your business details"}
         icon={<CrosshairIcon />}
         to={`/a/settings/details`}
-      />
+      /> */}
       {/* <SettingsCard
         heading={"Shipping"}
         description={"Manage shipping profiles"}

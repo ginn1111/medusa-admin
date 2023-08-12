@@ -75,7 +75,7 @@ const GeneralSection = ({ product }: Props) => {
         <p className="mt-2 whitespace-pre-wrap inter-base-regular text-grey-50">
           {product.description}
         </p>
-        <ProductTags product={product} />
+        {/* <ProductTags product={product} /> */}
         <ProductDetails product={product} />
         <ProductSalesChannels product={product} />
       </Section>
@@ -113,12 +113,12 @@ const ProductDetails = ({ product }: Props) => {
       <h2 className="inter-base-semibold">Details</h2>
       <Detail title="Subtitle" value={product.subtitle} />
       <Detail title="Handle" value={product.handle} />
-      <Detail title="Type" value={product.type?.value} />
+      {/* <Detail title="Type" value={product.type?.value} /> */}
       <Detail title="Collection" value={product.collection?.title} />
-      <Detail
+      {/* <Detail
         title="Discountable"
         value={product.discountable ? "True" : "False"}
-      />
+      /> */}
     </div>
   )
 }

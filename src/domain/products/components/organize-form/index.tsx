@@ -39,7 +39,7 @@ const OrganizeForm = ({ form }: Props) => {
   return (
     <div>
       <div className="grid grid-cols-2 gap-x-large mb-large">
-        <Controller
+        {/* <Controller
           name={path("type")}
           control={control}
           render={({ field: { value, onChange } }) => {
@@ -55,7 +55,7 @@ const OrganizeForm = ({ form }: Props) => {
               />
             )
           }}
-        />
+        /> */}
         <Controller
           name={path("collection")}
           control={control}
@@ -73,13 +73,13 @@ const OrganizeForm = ({ form }: Props) => {
           }}
         />
       </div>
-      <Controller
+      {/* <Controller
         control={control}
         name={path("tags")}
         render={({ field: { value, onChange } }) => {
           return <TagInput onChange={onChange} values={value || []} />
         }}
-      />
+      /> */}
     </div>
   )
 }
