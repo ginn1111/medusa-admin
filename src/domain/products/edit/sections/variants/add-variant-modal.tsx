@@ -21,6 +21,8 @@ const AddVariantModal = ({ open, onClose, product }: Props) => {
 
   const { onAddVariant, addingVariant } = useEditProductActions(product.id)
 
+  const hasOptions = product?.options?.length
+
   const { handleSubmit, reset } = form
 
   useEffect(() => {
@@ -42,31 +44,37 @@ const AddVariantModal = ({ open, onClose, product }: Props) => {
         <Modal.Header handleClose={resetAndClose}>
           <h1 className="inter-xlarge-semibold">Add Variant</h1>
         </Modal.Header>
-        <form onSubmit={onSubmit}>
+        {hasOptions ?
+          <form onSubmit={onSubmit}>
+            <Modal.Content>
+              <EditFlowVariantForm form={form} />
+            </Modal.Content>
+            <Modal.Footer>
+              <div className="flex items-center gap-x-xsmall justify-end w-full">
+                <Button
+                  variant="secondary"
+                  size="small"
+                  type="button"
+                  onClick={resetAndClose}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  size="small"
+                  type="submit"
+                  loading={addingVariant}
+                >
+                  Save and close
+                </Button>
+              </div>
+            </Modal.Footer>
+          </form>
+          :
           <Modal.Content>
-            <EditFlowVariantForm form={form} />
+            <h4 className="text-rose-500 text-md font-semibold">Please add at least a option!</h4>
           </Modal.Content>
-          <Modal.Footer>
-            <div className="flex items-center gap-x-xsmall justify-end w-full">
-              <Button
-                variant="secondary"
-                size="small"
-                type="button"
-                onClick={resetAndClose}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="primary"
-                size="small"
-                type="submit"
-                loading={addingVariant}
-              >
-                Save and close
-              </Button>
-            </div>
-          </Modal.Footer>
-        </form>
+        }
       </Modal.Body>
     </Modal>
   )

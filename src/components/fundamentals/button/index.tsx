@@ -43,7 +43,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         {...attributes}
         className={clsx(
-          "btn",
+          "btn disabled:cursor-not-allowed",
           variantClassname,
           sizeClassname,
           attributes.className

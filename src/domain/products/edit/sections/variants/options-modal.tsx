@@ -157,6 +157,19 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
     handleClose()
   })
 
+  const canDeleteOption = (optionId: string) => {
+    const variants = product.variants
+    if (!variants?.length) {
+      return true
+    }
+
+    return variants.some((variant) => {
+      return variant.options.findIndex(
+        (option) => option.option_id === optionId
+      )
+    })
+  }
+
   return (
     <Modal open={open} handleClose={handleClose}>
       <Modal.Body>
@@ -192,6 +205,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
                         className="px-2.5 py-2.5 max-h-[40px]"
                         type="button"
                         onClick={() => remove(index)}
+                        disabled={!canDeleteOption(product.options[index]?.id)}
                       >
                         <TrashIcon className="text-grey-40" size="20" />
                       </Button>
