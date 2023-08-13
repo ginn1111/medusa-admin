@@ -68,12 +68,12 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
         >
           Continue
         </Button>
-        <span
+        {/* <span
           className="inter-small-regular mt-8 cursor-pointer text-grey-50"
           onClick={toResetPassword}
         >
           Reset password
-        </span>
+        </span> */}
       </div>
     </form>
   )
