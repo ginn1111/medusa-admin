@@ -1,4 +1,4 @@
-import { useAdminStore } from "medusa-react"
+import { useAdminGetSession, useAdminStore } from "medusa-react"
 import React, { useState } from "react"
 import { useFeatureFlag } from "../../../context/feature-flag"
 import BuildingsIcon from "../../fundamentals/icons/buildings-icon"
@@ -11,11 +11,14 @@ import TagIcon from "../../fundamentals/icons/tag-icon"
 import UsersIcon from "../../fundamentals/icons/users-icon"
 import SidebarMenuItem from "../../molecules/sidebar-menu-item"
 import UserMenu from "../../molecules/user-menu"
+import useUserRole from "../../../hooks/use-user-role"
 
 const ICON_SIZE = 20
 
 const Sidebar: React.FC = () => {
   const [currentlyOpen, setCurrentlyOpen] = useState(-1)
+  const { user } = useAdminGetSession()
+  const { isMem } = useUserRole()
 
   const { store } = useAdminStore()
 
@@ -39,10 +42,12 @@ const Sidebar: React.FC = () => {
   return (
     <div className="bg-gray-0 h-screen min-w-sidebar max-w-sidebar overflow-y-auto border-r border-grey-20 py-base px-base">
       <div className="h-full">
-        <div className="flex justify-between px-2">
+        <div className="flex justify-between px-2 items-center">
           <div className="flex h-8 w-8 items-center justify-center rounded-circle border border-solid border-gray-300">
             <UserMenu />
           </div>
+          <p className="capitalize text-[12px] font-semibold text-slate-400 mr-auto ml-2 line-clamp-1">{user?.first_name}</p>
+          <p className="text-[11px] font-semibold capitalize px-2 bg-green-100 rounded-lg text-green-500">{user?.role}</p>
         </div>
         <div className="my-base flex flex-col px-2">
           <span className="text-small font-medium text-grey-50">Store</span>
@@ -63,12 +68,12 @@ const Sidebar: React.FC = () => {
             text={"Products"}
             triggerHandler={triggerHandler}
           />
-          <SidebarMenuItem
+          {!isMem && <SidebarMenuItem
             pageLink={"/a/customers"}
             icon={<UsersIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
             text={"Customers"}
-          />
+          />}
           {/* {inventoryEnabled && (
             <SidebarMenuItem
               pageLink={"/a/inventory"}
@@ -95,12 +100,12 @@ const Sidebar: React.FC = () => {
             triggerHandler={triggerHandler}
             text={"Pricing"}
           /> */}
-          <SidebarMenuItem
+          {!isMem && <SidebarMenuItem
             pageLink={"/a/settings"}
             icon={<GearIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
             text={"Settings"}
-          />
+          />}
         </div>
       </div>
     </div>

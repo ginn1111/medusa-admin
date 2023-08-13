@@ -67,6 +67,7 @@ import {
   PaymentDetails,
   PaymentStatusComponent,
 } from "./templates"
+import useUserRole from "../../../hooks/use-user-role"
 
 type OrderDetailFulfillment = {
   title: string
@@ -126,8 +127,7 @@ const gatherAllFulfillments = (order) => {
 
 const OrderDetails = () => {
   const { id } = useParams()
-  const { user } = useAdminGetSession()
-  console.log(user?.role)
+  const { isMem } = useUserRole()
 
   const { isFeatureEnabled } = React.useContext(FeatureFlagContext)
   const dialog = useImperativeDialog()
@@ -304,7 +304,7 @@ const OrderDetails = () => {
         ) : (
           <>
             <div className="flex items-start space-x-4">
-              <div className="flex h-full w-7/12 flex-col">
+              <div className="flex h-full w-full flex-col">
                 <BodyCard
                   className={"mb-4 min-h-[200px] w-full"}
                   customHeader={
@@ -325,13 +325,13 @@ const OrderDetails = () => {
                   actionables={
                     canCancel
                       ? [
-                          {
-                            label: "Cancel Order",
-                            icon: <CancelIcon size={"20"} />,
-                            variant: "danger",
-                            onClick: () => handleDeleteOrder(),
-                          },
-                        ]
+                        {
+                          label: "Cancel Order",
+                          icon: <CancelIcon size={"20"} />,
+                          variant: "danger",
+                          onClick: () => handleDeleteOrder(),
+                        },
+                      ]
                       : []
                   }
                 >
@@ -366,130 +366,132 @@ const OrderDetails = () => {
                     </div>
                   </div>
                 </BodyCard>
-                <OrderEditContext.Consumer>
-                  {({ showModal }) => (
+                <div className="flex w-full space-x-4">
+                  <div className="flex w-7/12 flex-col">
+                    <OrderEditContext.Consumer>
+                      {({ showModal }) => (
+                        <BodyCard
+                          className={"mb-4 h-auto min-h-0 w-full"}
+                          title="Summary"
+                          actionables={
+                            isFeatureEnabled("order_editing")
+                              ? [
+                                {
+                                  label: "Edit Order",
+                                  onClick: showModal,
+                                },
+                              ]
+                              : undefined
+                          }
+                        >
+                          <div className="mt-6">
+                            {order.items?.map((item, i) => (
+                              <OrderLine
+                                key={i}
+                                item={item}
+                                currencyCode={order.currency_code}
+                              />
+                            ))}
+                            <DisplayTotal
+                              currency={order.currency_code}
+                              totalAmount={order.subtotal}
+                              totalTitle={"Subtotal"}
+                            />
+                            {order?.discounts?.map((discount, index) => (
+                              <DisplayTotal
+                                key={index}
+                                currency={order.currency_code}
+                                totalAmount={-1 * order.discount_total}
+                                totalTitle={
+                                  <div className="inter-small-regular flex items-center text-grey-90">
+                                    Discount:{" "}
+                                    <Badge className="ml-3" variant="default">
+                                      {discount.code}
+                                    </Badge>
+                                  </div>
+                                }
+                              />
+                            ))}
+                            {order?.gift_cards?.map((giftCard, index) => (
+                              <DisplayTotal
+                                key={index}
+                                currency={order.currency_code}
+                                totalAmount={-1 * order.gift_card_total}
+                                totalTitle={
+                                  <div className="inter-small-regular flex items-center text-grey-90">
+                                    Gift card:
+                                    <Badge className="ml-3" variant="default">
+                                      {giftCard.code}
+                                    </Badge>
+                                    <div className="ml-2">
+                                      <CopyToClipboard
+                                        value={giftCard.code}
+                                        showValue={false}
+                                        iconSize={16}
+                                      />
+                                    </div>
+                                  </div>
+                                }
+                              />
+                            ))}
+                            <DisplayTotal
+                              currency={order.currency_code}
+                              totalAmount={order.shipping_total}
+                              totalTitle={"Shipping"}
+                            />
+                            <DisplayTotal
+                              currency={order.currency_code}
+                              totalAmount={order.tax_total}
+                              totalTitle={`Tax`}
+                            />
+                            <DisplayTotal
+                              variant={"large"}
+                              currency={order.currency_code}
+                              totalAmount={order.total}
+                              totalTitle={hasMovements ? "Original Total" : "Total"}
+                            />
+                            <PaymentDetails
+                              manualRefund={manualRefund}
+                              swapAmount={swapAmount}
+                              swapRefund={swapRefund}
+                              returnRefund={returnRefund}
+                              paidTotal={order.paid_total}
+                              refundedTotal={order.refunded_total}
+                              currency={order.currency_code}
+                            />
+                          </div>
+                        </BodyCard>
+                      )}
+                    </OrderEditContext.Consumer>
+
                     <BodyCard
                       className={"mb-4 h-auto min-h-0 w-full"}
-                      title="Summary"
-                      actionables={
-                        isFeatureEnabled("order_editing")
-                          ? [
-                              {
-                                label: "Edit Order",
-                                onClick: showModal,
-                              },
-                            ]
-                          : undefined
+                      title="Payment"
+                      status={
+                        <PaymentStatusComponent status={order.payment_status} />
+                      }
+                      customActionable={
+                        order.status !== "canceled" && (
+                          <PaymentActionables
+                            order={order}
+                            capturePayment={capturePayment}
+                            showRefundMenu={() => setShowRefund(true)}
+                          />
+                        )
                       }
                     >
                       <div className="mt-6">
-                        {order.items?.map((item, i) => (
-                          <OrderLine
-                            key={i}
-                            item={item}
-                            currencyCode={order.currency_code}
-                          />
-                        ))}
-                        <DisplayTotal
-                          currency={order.currency_code}
-                          totalAmount={order.subtotal}
-                          totalTitle={"Subtotal"}
-                        />
-                        {order?.discounts?.map((discount, index) => (
-                          <DisplayTotal
-                            key={index}
-                            currency={order.currency_code}
-                            totalAmount={-1 * order.discount_total}
-                            totalTitle={
-                              <div className="inter-small-regular flex items-center text-grey-90">
-                                Discount:{" "}
-                                <Badge className="ml-3" variant="default">
-                                  {discount.code}
-                                </Badge>
-                              </div>
-                            }
-                          />
-                        ))}
-                        {order?.gift_cards?.map((giftCard, index) => (
-                          <DisplayTotal
-                            key={index}
-                            currency={order.currency_code}
-                            totalAmount={-1 * order.gift_card_total}
-                            totalTitle={
-                              <div className="inter-small-regular flex items-center text-grey-90">
-                                Gift card:
-                                <Badge className="ml-3" variant="default">
-                                  {giftCard.code}
-                                </Badge>
-                                <div className="ml-2">
-                                  <CopyToClipboard
-                                    value={giftCard.code}
-                                    showValue={false}
-                                    iconSize={16}
-                                  />
-                                </div>
-                              </div>
-                            }
-                          />
-                        ))}
-                        <DisplayTotal
-                          currency={order.currency_code}
-                          totalAmount={order.shipping_total}
-                          totalTitle={"Shipping"}
-                        />
-                        <DisplayTotal
-                          currency={order.currency_code}
-                          totalAmount={order.tax_total}
-                          totalTitle={`Tax`}
-                        />
-                        <DisplayTotal
-                          variant={"large"}
-                          currency={order.currency_code}
-                          totalAmount={order.total}
-                          totalTitle={hasMovements ? "Original Total" : "Total"}
-                        />
-                        <PaymentDetails
-                          manualRefund={manualRefund}
-                          swapAmount={swapAmount}
-                          swapRefund={swapRefund}
-                          returnRefund={returnRefund}
-                          paidTotal={order.paid_total}
-                          refundedTotal={order.refunded_total}
-                          currency={order.currency_code}
-                        />
-                      </div>
-                    </BodyCard>
-                  )}
-                </OrderEditContext.Consumer>
-
-                <BodyCard
-                  className={"mb-4 h-auto min-h-0 w-full"}
-                  title="Payment"
-                  status={
-                    <PaymentStatusComponent status={order.payment_status} />
-                  }
-                  customActionable={
-                    order.status !== "canceled" && (
-                      <PaymentActionables
-                        order={order}
-                        capturePayment={capturePayment}
-                        showRefundMenu={() => setShowRefund(true)}
-                      />
-                    )
-                  }
-                >
-                  <div className="mt-6">
-                    {order.payments.map((payment) => (
-                      <div className="flex flex-col" key={payment.id}>
-                        <DisplayTotal
-                          currency={order.currency_code}
-                          totalAmount={payment.amount}
-                          totalTitle={payment.id}
-                          subtitle={`${moment(payment.created_at).format(
-                            "DD MMM YYYY hh:mm"
-                          )}`}
-                        />
-                        {/* {!!payment.amount_refunded && (
+                        {order.payments.map((payment) => (
+                          <div className="flex flex-col" key={payment.id}>
+                            <DisplayTotal
+                              currency={order.currency_code}
+                              totalAmount={payment.amount}
+                              totalTitle={payment.id}
+                              subtitle={`${moment(payment.created_at).format(
+                                "DD MMM YYYY hh:mm"
+                              )}`}
+                            />
+                            {/* {!!payment.amount_refunded && (
                           <div className="mt-4 flex justify-between">
                             <div className="flex">
                               <div className="mr-2 text-grey-40">
@@ -513,131 +515,134 @@ const OrderDetails = () => {
                             </div>
                           </div>
                         )} */}
-                      </div>
-                    ))}
-                    <div className="mt-4 flex justify-between">
-                      <div className="inter-small-semibold text-grey-90">
-                        Total Paid
-                      </div>
-                      <div className="flex">
-                        <div className="inter-small-semibold mr-3 text-grey-90">
-                          {formatAmountWithSymbol({
-                            amount: order.paid_total - order.refunded_total,
-                            currency: order.currency_code,
-                          })}
+                          </div>
+                        ))}
+                        <div className="mt-4 flex justify-between">
+                          <div className="inter-small-semibold text-grey-90">
+                            Total Paid
+                          </div>
+                          <div className="flex">
+                            <div className="inter-small-semibold mr-3 text-grey-90">
+                              {formatAmountWithSymbol({
+                                amount: order.paid_total - order.refunded_total,
+                                currency: order.currency_code,
+                              })}
+                            </div>
+                            <div className="inter-small-regular text-grey-50">
+                              {order.currency_code.toUpperCase()}
+                            </div>
+                          </div>
                         </div>
-                        <div className="inter-small-regular text-grey-50">
-                          {order.currency_code.toUpperCase()}
-                        </div>
                       </div>
-                    </div>
-                  </div>
-                </BodyCard>
-                <BodyCard
-                  className={"mb-4 h-auto min-h-0 w-full"}
-                  title="Fulfillment"
-                  status={
-                    <FulfillmentStatusComponent
-                      status={order.fulfillment_status}
-                    />
-                  }
-                  customActionable={
-                    order.fulfillment_status !== "fulfilled" &&
-                    order.status !== "canceled" &&
-                    order.fulfillment_status !== "shipped" && (
-                      <Button
-                        variant="secondary"
-                        size="small"
-                        onClick={() => setShowFulfillment(true)}
-                      >
-                        Create Fulfillment
-                      </Button>
-                    )
-                  }
-                >
-                  <div className="mt-6">
-                    {order.shipping_methods.map((method) => (
-                      <div className="flex flex-col" key={method.id}>
-                        <span className="inter-small-regular text-grey-50">
-                          Shipping Method
-                        </span>
-                        <span className="inter-small-regular mt-2 text-grey-90">
-                          {method?.shipping_option?.name || ""}
-                        </span>
-                        {/* <div className="mt-4 flex w-full flex-grow items-center">
+                    </BodyCard>
+                    <BodyCard
+                      className={"mb-4 h-auto min-h-0 w-full"}
+                      title="Fulfillment"
+                      status={
+                        <FulfillmentStatusComponent
+                          status={order.fulfillment_status}
+                        />
+                      }
+                      customActionable={
+                        order.fulfillment_status !== "fulfilled" &&
+                        order.status !== "canceled" &&
+                        order.fulfillment_status !== "shipped" && (
+                          <Button
+                            variant="secondary"
+                            size="small"
+                            onClick={() => setShowFulfillment(true)}
+                          >
+                            Create Fulfillment
+                          </Button>
+                        )
+                      }
+                    >
+                      <div className="mt-6">
+                        {order.shipping_methods.map((method) => (
+                          <div className="flex flex-col" key={method.id}>
+                            <span className="inter-small-regular text-grey-50">
+                              Shipping Method
+                            </span>
+                            <span className="inter-small-regular mt-2 text-grey-90">
+                              {method?.shipping_option?.name || ""}
+                            </span>
+                            {/* <div className="mt-4 flex w-full flex-grow items-center">
                           <JSONView data={method?.data} />
                         </div> */}
+                          </div>
+                        ))}
+                        <div className="inter-small-regular mt-6 ">
+                          {allFulfillments.map((fulfillmentObj, i) => (
+                            <FormattedFulfillment
+                              key={i}
+                              order={order}
+                              fulfillmentObj={fulfillmentObj}
+                              setFullfilmentToShip={setFullfilmentToShip}
+                            />
+                          ))}
+                        </div>
                       </div>
-                    ))}
-                    <div className="inter-small-regular mt-6 ">
-                      {allFulfillments.map((fulfillmentObj, i) => (
-                        <FormattedFulfillment
-                          key={i}
-                          order={order}
-                          fulfillmentObj={fulfillmentObj}
-                          setFullfilmentToShip={setFullfilmentToShip}
-                        />
-                      ))}
-                    </div>
+                    </BodyCard>
                   </div>
-                </BodyCard>
+                  <div className="flex w-5/12 flex-col">
+                    <BodyCard
+                      className={"mb-4 h-auto min-h-0 w-full"}
+                      title="Customer"
+                      actionables={!isMem ? customerActionables : []}
+                    >
+                      <div className="mt-6">
+                        <div className="flex w-full items-center space-x-4">
+                          <div className="flex h-[40px] w-[40px] ">
+                            <Avatar
+                              user={order.customer}
+                              font="inter-large-semibold"
+                              color="bg-fuschia-40"
+                            />
+                          </div>
+                          <div>
+                            <h1 className="inter-large-semibold text-grey-90">
+                              {extractCustomerName(order)}
+                            </h1>
+                            {order.shipping_address && (
+                              <span className="inter-small-regular text-grey-50">
+                                {order.shipping_address.city},{" "}
+                                {
+                                  isoAlpha2Countries[
+                                  order.shipping_address.country_code!.toUpperCase()
+                                  ]
+                                }
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="mt-6 flex flex-col space-y-6 divide-y">
+                          <div className="flex flex-col">
+                            <div className="inter-small-regular mb-1 text-grey-50">
+                              Contact
+                            </div>
+                            <div className="inter-small-regular flex flex-col">
+                              <span>{order.email}</span>
+                              <span>{order.shipping_address?.phone || ""}</span>
+                            </div>
+                          </div>
+                          <FormattedAddress
+                            title={"Shipping"}
+                            addr={order.shipping_address}
+                          />
+                          <FormattedAddress
+                            title={"Billing"}
+                            addr={order.billing_address}
+                          />
+                        </div>
+                      </div>
+                    </BodyCard>
+                    <RawJSON data={order} title="Raw order" />
+                  </div>
+                </div>
               </div>
 
               {/* <Timeline orderId={order.id} /> */}
-              <div className="flex w-5/12 flex-col">
-                <BodyCard
-                  className={"mb-4 h-auto min-h-0 w-full"}
-                  title="Customer"
-                  actionables={customerActionables}
-                >
-                  <div className="mt-6">
-                    <div className="flex w-full items-center space-x-4">
-                      <div className="flex h-[40px] w-[40px] ">
-                        <Avatar
-                          user={order.customer}
-                          font="inter-large-semibold"
-                          color="bg-fuschia-40"
-                        />
-                      </div>
-                      <div>
-                        <h1 className="inter-large-semibold text-grey-90">
-                          {extractCustomerName(order)}
-                        </h1>
-                        {order.shipping_address && (
-                          <span className="inter-small-regular text-grey-50">
-                            {order.shipping_address.city},{" "}
-                            {
-                              isoAlpha2Countries[
-                                order.shipping_address.country_code?.toUpperCase()
-                              ]
-                            }
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="mt-6 flex flex-col space-y-6 divide-y">
-                      <div className="flex flex-col">
-                        <div className="inter-small-regular mb-1 text-grey-50">
-                          Contact
-                        </div>
-                        <div className="inter-small-regular flex flex-col">
-                          <span>{order.email}</span>
-                          <span>{order.shipping_address?.phone || ""}</span>
-                        </div>
-                      </div>
-                      <FormattedAddress
-                        title={"Shipping"}
-                        addr={order.shipping_address}
-                      />
-                      <FormattedAddress
-                        title={"Billing"}
-                        addr={order.billing_address}
-                      />
-                    </div>
-                  </div>
-                </BodyCard>
-                <RawJSON data={order} title="Raw order" />
-              </div>
+
             </div>
             {addressModal && (
               <AddressModal

@@ -14,6 +14,7 @@ import useToggleState from "../../../../../hooks/use-toggle-state"
 import useEditProductActions from "../../hooks/use-edit-product-actions"
 import ChannelsModal from "./channels-modal"
 import GeneralModal from "./general-modal"
+import useUserRole from "../../../../../hooks/use-user-role"
 
 type Props = {
   product: Product
@@ -34,6 +35,7 @@ const GeneralSection = ({ product }: Props) => {
   } = useToggleState(false)
 
   const { isFeatureEnabled } = useFeatureFlag()
+  const { isMem } = useUserRole()
 
   const actions: ActionType[] = [
     {
@@ -41,13 +43,18 @@ const GeneralSection = ({ product }: Props) => {
       onClick: toggleInfo,
       icon: <EditIcon size={20} />,
     },
-    {
-      label: "Delete",
-      onClick: onDelete,
-      variant: "danger",
-      icon: <TrashIcon size={20} />,
-    },
   ]
+
+  if (!isMem) {
+    actions.push(
+      {
+        label: "Delete",
+        onClick: onDelete,
+        variant: "danger",
+        icon: <TrashIcon size={20} />,
+      },
+    )
+  }
 
   if (isFeatureEnabled("sales_channels")) {
     actions.splice(1, 0, {

@@ -19,11 +19,13 @@ import clsx from "clsx"
 import OrderResults from "./results/order-results"
 import CrossIcon from "../../fundamentals/icons/cross-icon"
 import Tooltip from "../../atoms/tooltip"
+import useUserRole from "../../../hooks/use-user-role"
 
 const getTotal = (...lists) =>
   lists.reduce((total, list = []) => total + list.length, 0)
 
 const SearchModal = ({ handleClose }) => {
+  const { isMem } = useUserRole()
   const [q, setQ] = React.useState("")
   const query = useDebounce(q, 500)
   const onChange = (e) => setQ(e.target.value)
@@ -45,7 +47,7 @@ const SearchModal = ({ handleClose }) => {
       limit: 5,
       offset: 0,
     },
-    { enabled: !!query, keepPreviousData: true, retry: 0 }
+    { enabled: !isMem && !!query, keepPreviousData: true, retry: 0 }
   )
   const { discounts, isFetching: isFetchingDiscounts } = useAdminDiscounts(
     { q: query, limit: 5, offset: 0 },

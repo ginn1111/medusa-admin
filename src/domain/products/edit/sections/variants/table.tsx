@@ -6,6 +6,7 @@ import EditIcon from "../../../../../components/fundamentals/icons/edit-icon"
 import TrashIcon from "../../../../../components/fundamentals/icons/trash-icon"
 import Actionables from "../../../../../components/molecules/actionables"
 import Table from "../../../../../components/molecules/table"
+import useUserRole from "../../../../../hooks/use-user-role"
 
 type Props = {
   variants: ProductVariant[]
@@ -78,6 +79,7 @@ export const useVariantsTableColumns = () => {
 
 const VariantsTable = ({ variants, actions }: Props) => {
   const columns = useVariantsTableColumns()
+  const { isMem } = useUserRole()
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -115,36 +117,38 @@ const VariantsTable = ({ variants, actions }: Props) => {
                   </Table.Cell>
                 )
               })}
-              <Table.Cell>
-                <div className="float-right">
-                  <Actionables
-                    forceDropdown
-                    actions={[
-                      {
-                        label: "Edit Variant",
-                        icon: <EditIcon size="20" />,
-                        onClick: () => updateVariant(row.original),
-                      },
-                      {
-                        label: "Duplicate Variant",
-                        onClick: () =>
-                          // @ts-ignore
-                          duplicateVariant({
-                            ...row.original,
-                            title: row.original.title + " Copy",
-                          }),
-                        icon: <DuplicateIcon size="20" />,
-                      },
-                      {
-                        label: "Delete Variant",
-                        onClick: () => deleteVariant(row.original.id),
-                        icon: <TrashIcon size="20" />,
-                        variant: "danger",
-                      },
-                    ]}
-                  />
-                </div>
-              </Table.Cell>
+              {!isMem &&
+                <Table.Cell>
+                  <div className="float-right">
+                    <Actionables
+                      forceDropdown
+                      actions={[
+                        {
+                          label: "Edit Variant",
+                          icon: <EditIcon size="20" />,
+                          onClick: () => updateVariant(row.original),
+                        },
+                        {
+                          label: "Duplicate Variant",
+                          onClick: () =>
+                            // @ts-ignore
+                            duplicateVariant({
+                              ...row.original,
+                              title: row.original.title + " Copy",
+                            }),
+                          icon: <DuplicateIcon size="20" />,
+                        },
+                        {
+                          label: "Delete Variant",
+                          onClick: () => deleteVariant(row.original.id),
+                          icon: <TrashIcon size="20" />,
+                          variant: "danger",
+                        },
+                      ]}
+                    />
+                  </div>
+                </Table.Cell>
+              }
             </Table.Row>
           )
         })}

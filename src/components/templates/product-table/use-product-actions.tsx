@@ -12,12 +12,14 @@ import TrashIcon from "../../fundamentals/icons/trash-icon"
 import UnpublishIcon from "../../fundamentals/icons/unpublish-icon"
 import { ActionType } from "../../molecules/actionables"
 import useCopyProduct from "./use-copy-product"
+import useUserRole from "../../../hooks/use-user-role"
 
 const useProductActions = (product: Product) => {
   const navigate = useNavigate()
   const notification = useNotification()
   const dialog = useImperativeDialog()
   const copyProduct = useCopyProduct()
+  const { isMem } = useUserRole();
   const deleteProduct = useAdminDeleteProduct(product?.id)
   const updateProduct = useAdminUpdateProduct(product?.id)
 
@@ -32,54 +34,64 @@ const useProductActions = (product: Product) => {
     }
   }
 
-  const getActions = (): ActionType[] => [
-    {
-      label: "Edit",
-      onClick: () => navigate(`/a/products/${product.id}`),
-      icon: <EditIcon size={20} />,
-    },
-    {
-      label: product.status === "published" ? "Unpublish" : "Publish",
-      onClick: () => {
-        const newStatus = product.status === "published" ? "draft" : "published"
-        updateProduct.mutate(
-          {
-            status: newStatus,
-          },
-          {
-            onSuccess: () => {
-              notification(
-                "Success",
-                `Successfully ${
-                  product.status === "published" ? "unpublished" : "published"
-                } product`,
-                "success"
-              )
-            },
-            onError: (err) =>
-              notification("Error", getErrorMessage(err), "error"),
-          }
-        )
+  const getActions = () => {
+    const actions: ActionType[] = [
+      {
+        label: "Edit",
+        onClick: () => navigate(`/a/products/${product.id}`),
+        icon: <EditIcon size={20} />,
       },
-      icon:
-        product.status === "published" ? (
-          <UnpublishIcon size={20} />
-        ) : (
-          <PublishIcon size={20} />
-        ),
-    },
-    {
-      label: "Duplicate",
-      onClick: () => copyProduct(product),
-      icon: <DuplicateIcon size={20} />,
-    },
-    {
-      label: "Delete",
-      variant: "danger",
-      onClick: handleDelete,
-      icon: <TrashIcon size={20} />,
-    },
-  ]
+      {
+        label: product.status === "published" ? "Unpublish" : "Publish",
+        onClick: () => {
+          const newStatus = product.status === "published" ? "draft" : "published"
+          updateProduct.mutate(
+            {
+              status: newStatus,
+            },
+            {
+              onSuccess: () => {
+                notification(
+                  "Success",
+                  `Successfully ${product.status === "published" ? "unpublished" : "published"
+                  } product`,
+                  "success"
+                )
+              },
+              onError: (err) =>
+                notification("Error", getErrorMessage(err), "error"),
+            }
+          )
+        },
+        icon:
+          product.status === "published" ? (
+            <UnpublishIcon size={20} />
+          ) : (
+            <PublishIcon size={20} />
+          ),
+      },
+      {
+        label: "Duplicate",
+        onClick: () => copyProduct(product),
+        icon: <DuplicateIcon size={20} />,
+      },
+    ]
+
+    if (!isMem) {
+      actions.push(
+        {
+          label: "Delete",
+          variant: "danger",
+          onClick: handleDelete,
+          icon: <TrashIcon size={20} />,
+        },
+      )
+    }
+
+    return actions
+  }
+
+
 
   return {
     getActions,

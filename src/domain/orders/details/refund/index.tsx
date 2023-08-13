@@ -32,7 +32,7 @@ type RefundMenuProps = {
   order: Order
   onDismiss: () => void
   initialAmount?: number
-  initialReason: "other" | "discount"
+  initialReason?: "other" | "discount"
 }
 
 const RefundMenu = ({
@@ -162,9 +162,8 @@ const RefundMenu = ({
                 onClick={() => setNoNotification(!noNotification)}
               >
                 <div
-                  className={`flex h-5 w-5 justify-center rounded-base border border-grey-30 text-grey-0 ${
-                    !noNotification && "bg-violet-60"
-                  }`}
+                  className={`flex h-5 w-5 justify-center rounded-base border border-grey-30 text-grey-0 ${!noNotification && "bg-violet-60"
+                    }`}
                 >
                   <span className="self-center">
                     {!noNotification && <CheckIcon size={16} />}

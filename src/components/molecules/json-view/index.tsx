@@ -6,20 +6,24 @@ import useClipboard from "../../../hooks/use-clipboard"
 import Button from "../../fundamentals/button"
 import ChevronDownIcon from "../../fundamentals/icons/chevron-down"
 import ClipboardCopyIcon from "../../fundamentals/icons/clipboard-copy-icon"
+import useUserRole from "../../../hooks/use-user-role"
 
 type JSONViewProps = {
   data: object
 }
 
 const JSONView = ({ data }: JSONViewProps) => {
+  const { isDev } = useUserRole()
   const [expanded, setExpanded] = useState(false)
   const [isCopied, handleCopy] = useClipboard(
     JSON.stringify(data, undefined, 2),
     {
       successDuration: 5500,
-      onCopied: () => {},
+      onCopied: () => { },
     }
   )
+
+  if (!isDev) return null;
 
   const length = useMemo(() => {
     return Object.keys(data).length

@@ -175,6 +175,7 @@ const CollectionRow = ({ row }) => {
     <Table.Row
       color={"inherit"}
       linkTo={`/a/collections/${collection.id}`}
+      forceDropdown
       actions={getActions(collection)}
       {...row.getRowProps()}
     >

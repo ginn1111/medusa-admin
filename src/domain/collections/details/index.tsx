@@ -9,7 +9,7 @@ import BackButton from "../../../components/atoms/back-button"
 import Spinner from "../../../components/atoms/spinner"
 import EditIcon from "../../../components/fundamentals/icons/edit-icon"
 import TrashIcon from "../../../components/fundamentals/icons/trash-icon"
-import Actionables from "../../../components/molecules/actionables"
+import Actionables, { ActionType } from "../../../components/molecules/actionables"
 import JSONView from "../../../components/molecules/json-view"
 import DeletePrompt from "../../../components/organisms/delete-prompt"
 import { MetadataField } from "../../../components/organisms/metadata"
@@ -20,6 +20,7 @@ import ViewProductsTable from "../../../components/templates/collection-product-
 import useNotification from "../../../hooks/use-notification"
 import Medusa from "../../../services/api"
 import { getErrorMessage } from "../../../utils/error-messages"
+import useUserRole from "../../../hooks/use-user-role"
 
 const CollectionDetails = () => {
   const { id } = useParams()
@@ -27,12 +28,33 @@ const CollectionDetails = () => {
   const { collection, isLoading, refetch } = useAdminCollection(id!)
   const deleteCollection = useAdminDeleteCollection(id!)
   const updateCollection = useAdminUpdateCollection(id!)
+  const { isMem, isDev } = useUserRole()
   const [showEdit, setShowEdit] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
   const [showAddProducts, setShowAddProducts] = useState(false)
   const navigate = useNavigate()
   const notification = useNotification()
   const [updates, setUpdates] = useState(0)
+
+  const actions: ActionType[] = [
+    {
+      label: "Edit Collection",
+      onClick: () => setShowEdit(true),
+      icon: <EditIcon size="20" />,
+    },
+
+  ]
+
+  if (!isMem) {
+    actions.push(
+      {
+        label: "Delete",
+        onClick: () => setShowDelete(!showDelete),
+        variant: "danger",
+        icon: <TrashIcon size="20" />,
+      },
+    )
+  }
 
   const handleDelete = () => {
     deleteCollection.mutate(undefined, {
@@ -127,26 +149,14 @@ const CollectionDetails = () => {
                   </h2>
                   <Actionables
                     forceDropdown
-                    actions={[
-                      {
-                        label: "Edit Collection",
-                        onClick: () => setShowEdit(true),
-                        icon: <EditIcon size="20" />,
-                      },
-                      {
-                        label: "Delete",
-                        onClick: () => setShowDelete(!showDelete),
-                        variant: "danger",
-                        icon: <TrashIcon size="20" />,
-                      },
-                    ]}
+                    actions={actions}
                   />
                 </div>
                 <p className="inter-small-regular text-grey-50">
                   /{collection.handle}
                 </p>
               </div>
-              {collection.metadata && (
+              {isDev && collection.metadata && (
                 <div className="mt-large flex flex-col gap-y-base">
                   <h3 className="inter-base-semibold">Metadata</h3>
                   <div>

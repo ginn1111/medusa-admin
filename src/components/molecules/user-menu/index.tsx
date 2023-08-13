@@ -8,11 +8,13 @@ import Avatar from "../../atoms/avatar"
 import Button from "../../fundamentals/button"
 import GearIcon from "../../fundamentals/icons/gear-icon"
 import SignOutIcon from "../../fundamentals/icons/log-out-icon"
+import useUserRole from "../../../hooks/use-user-role"
 
 const UserMenu: React.FC = () => {
   const navigate = useNavigate()
 
   const { user, isLoading } = useAdminGetSession()
+  const { isMem } = useUserRole()
   const { mutate } = useAdminDeleteSession()
 
   const notification = useNotification()
@@ -44,17 +46,19 @@ const UserMenu: React.FC = () => {
           side="bottom"
           className="z-30 ml-large min-w-[200px] rounded-rounded border border-grey-20 bg-grey-0 p-xsmall shadow-dropdown"
         >
-          <DropdownMenu.Item className="mb-1 outline-none">
-            <Button
-              variant="ghost"
-              size="small"
-              className={"w-full justify-start"}
-              onClick={() => navigate("/a/settings")}
-            >
-              <GearIcon />
-              Settings
-            </Button>
-          </DropdownMenu.Item>
+          {!isMem &&
+            <DropdownMenu.Item className="mb-1 outline-none">
+              <Button
+                variant="ghost"
+                size="small"
+                className={"w-full justify-start"}
+                onClick={() => navigate("/a/settings")}
+              >
+                <GearIcon />
+                Settings
+              </Button>
+            </DropdownMenu.Item>
+          }
           <DropdownMenu.Item className="outline-none">
             <Button
               variant="ghost"
@@ -66,6 +70,7 @@ const UserMenu: React.FC = () => {
               Sign out
             </Button>
           </DropdownMenu.Item>
+
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>

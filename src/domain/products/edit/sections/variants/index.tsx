@@ -13,6 +13,7 @@ import EditVariantsModal from "./edit-variants-modal"
 import OptionsModal from "./options-modal"
 import OptionsProvider, { useOptionsContext } from "./options-provider"
 import VariantsTable from "./table"
+import useUserRole from "../../../../../hooks/use-user-role"
 
 type Props = {
   product: Product
@@ -22,6 +23,7 @@ const VariantsSection = ({ product }: Props) => {
   const [variantToEdit, setVariantToEdit] = useState<
     { base: ProductVariant; isDuplicate: boolean } | undefined
   >(undefined)
+  const { isMem } = useUserRole()
 
   const {
     state: optionState,
@@ -76,7 +78,7 @@ const VariantsSection = ({ product }: Props) => {
 
   return (
     <OptionsProvider product={product}>
-      <Section title="Variants" actions={actions}>
+      <Section title="Variants" actions={!isMem ? actions : []}>
         <ProductOptions />
         <div className="mt-xlarge">
           <h2 className="inter-large-semibold mb-base">

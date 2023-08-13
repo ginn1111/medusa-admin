@@ -18,6 +18,7 @@ import { getErrorMessage } from "../../../utils/error-messages"
 import ImportProducts from "../batch-job/import"
 import NewProduct from "../new"
 import { PollingContext } from "../../../context/polling"
+import useUserRole from "../../../hooks/use-user-role"
 
 const VIEWS = ["products", "collections"]
 
@@ -25,6 +26,7 @@ const Overview = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [view, setView] = useState("products")
+  const { isMem } = useUserRole()
   const {
     state: createProductState,
     close: closeProductCreate,
@@ -166,7 +168,7 @@ const Overview = () => {
         <div className="flex w-full grow flex-col">
           <BodyCard
             forceDropdown={false}
-            customActionable={CurrentAction()}
+            customActionable={!isMem ? CurrentAction() : []}
             customHeader={
               <TableViewHeader
                 views={VIEWS}
