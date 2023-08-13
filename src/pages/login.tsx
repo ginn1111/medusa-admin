@@ -12,7 +12,7 @@ const LoginPage = () => {
   return (
     <LoginLayout>
       <SEO title="Login" />
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center pt-5">
         <div
           className={clsx(
             "flex min-h-[600px] w-[640px] justify-center rounded-rounded bg-grey-0 transition-['min-height'] duration-300",
