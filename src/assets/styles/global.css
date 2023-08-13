@@ -42,133 +42,133 @@
 
 @layer components {
   .inter-5xlarge-regular {
-    @apply font-sans text-5xlarge leading-4xlarge font-normal;
+    @apply font-sans text-5xlarge font-normal leading-4xlarge;
   }
   .inter-5xlarge-semibold {
-    @apply font-sans text-5xlarge leading-4xlarge font-semibold;
+    @apply font-sans text-5xlarge font-semibold leading-4xlarge;
   }
 
   .inter-4xlarge-regular {
-    @apply font-sans text-4xlarge leading-3xlarge font-normal;
+    @apply font-sans text-4xlarge font-normal leading-3xlarge;
   }
   .inter-4xlarge-semibold {
-    @apply font-sans text-4xlarge leading-3xlarge font-semibold;
+    @apply font-sans text-4xlarge font-semibold leading-3xlarge;
   }
 
   .inter-3xlarge-regular {
-    @apply font-sans text-3xlarge leading-2xlarge font-normal;
+    @apply font-sans text-3xlarge font-normal leading-2xlarge;
   }
   .inter-3xlarge-semibold {
-    @apply font-sans text-3xlarge leading-2xlarge font-semibold;
+    @apply font-sans text-3xlarge font-semibold leading-2xlarge;
   }
 
   .inter-2xlarge-regular {
-    @apply font-sans text-2xlarge leading-xlarge font-normal;
+    @apply font-sans text-2xlarge font-normal leading-xlarge;
   }
   .inter-2xlarge-semibold {
-    @apply font-sans text-2xlarge leading-xlarge font-semibold;
+    @apply font-sans text-2xlarge font-semibold leading-xlarge;
   }
 
   .inter-xlarge-regular {
-    @apply font-sans text-xlarge leading-large font-normal;
+    @apply font-sans text-xlarge font-normal leading-large;
   }
   .inter-xlarge-semibold {
-    @apply font-sans text-xlarge leading-large font-semibold;
+    @apply font-sans text-xlarge font-semibold leading-large;
   }
 
   .inter-large-regular {
-    @apply font-sans text-large leading-base font-normal;
+    @apply font-sans text-large font-normal leading-base;
   }
   .inter-large-semibold {
-    @apply font-sans text-large leading-base font-semibold;
+    @apply font-sans text-large font-semibold leading-base;
   }
 
   .inter-base-regular {
-    @apply font-sans text-base leading-base font-normal;
+    @apply font-sans text-base font-normal leading-base;
   }
   .inter-base-semibold {
-    @apply font-sans text-base leading-base font-semibold;
+    @apply font-sans text-base font-semibold leading-base;
   }
 
   .inter-small-regular {
-    @apply font-sans text-small leading-small font-normal;
+    @apply font-sans text-small font-normal leading-small;
   }
   .inter-small-semibold {
-    @apply font-sans text-small leading-small font-semibold;
+    @apply font-sans text-small font-semibold leading-small;
   }
 
   .inter-xsmall-regular {
-    @apply font-sans text-xsmall leading-xsmall font-normal;
+    @apply font-sans text-xsmall font-normal leading-xsmall;
   }
   .inter-xsmall-semibold {
-    @apply font-sans text-xsmall leading-xsmall font-semibold;
+    @apply font-sans text-xsmall font-semibold leading-xsmall;
   }
 
   .mono-5xlarge-regular {
-    @apply font-mono text-5xlarge leading-4xlarge font-normal;
+    @apply font-mono text-5xlarge font-normal leading-4xlarge;
   }
   .mono-5xlarge-semibold {
-    @apply font-mono text-5xlarge leading-4xlarge font-bold;
+    @apply font-mono text-5xlarge font-bold leading-4xlarge;
   }
 
   .mono-4xlarge-regular {
-    @apply font-mono text-4xlarge leading-3xlarge font-normal;
+    @apply font-mono text-4xlarge font-normal leading-3xlarge;
   }
   .mono-4xlarge-semibold {
-    @apply font-mono text-4xlarge leading-3xlarge font-bold;
+    @apply font-mono text-4xlarge font-bold leading-3xlarge;
   }
 
   .mono-3xlarge-regular {
-    @apply font-mono text-3xlarge leading-2xlarge font-normal;
+    @apply font-mono text-3xlarge font-normal leading-2xlarge;
   }
   .mono-3xlarge-semibold {
-    @apply font-mono text-3xlarge leading-2xlarge font-bold;
+    @apply font-mono text-3xlarge font-bold leading-2xlarge;
   }
 
   .mono-2xlarge-regular {
-    @apply font-mono text-2xlarge leading-xlarge font-normal;
+    @apply font-mono text-2xlarge font-normal leading-xlarge;
   }
   .mono-2xlarge-semibold {
-    @apply font-mono text-2xlarge leading-xlarge font-bold;
+    @apply font-mono text-2xlarge font-bold leading-xlarge;
   }
 
   .mono-xlarge-regular {
-    @apply font-mono text-xlarge leading-large font-normal;
+    @apply font-mono text-xlarge font-normal leading-large;
   }
   .mono-xlarge-semibold {
-    @apply font-mono text-xlarge leading-large font-bold;
+    @apply font-mono text-xlarge font-bold leading-large;
   }
 
   .mono-large-regular {
-    @apply font-mono text-large leading-base font-normal;
+    @apply font-mono text-large font-normal leading-base;
   }
   .mono-large-semibold {
-    @apply font-mono text-large leading-base font-bold;
+    @apply font-mono text-large font-bold leading-base;
   }
 
   .mono-base-regular {
-    @apply font-mono text-base leading-base font-normal;
+    @apply font-mono text-base font-normal leading-base;
   }
   .mono-base-semibold {
-    @apply font-mono text-base leading-base font-bold;
+    @apply font-mono text-base font-bold leading-base;
   }
 
   .mono-small-regular {
-    @apply font-mono text-small leading-small font-normal;
+    @apply font-mono text-small font-normal leading-small;
   }
   .mono-small-semibold {
-    @apply font-mono text-small leading-small font-bold;
+    @apply font-mono text-small font-bold leading-small;
   }
 
   .mono-xsmall-regular {
-    @apply font-mono text-xsmall leading-xsmall font-normal;
+    @apply font-mono text-xsmall font-normal leading-xsmall;
   }
   .mono-xsmall-semibold {
-    @apply font-mono text-xsmall leading-xsmall font-bold;
+    @apply font-mono text-xsmall font-bold leading-xsmall;
   }
 
   .radio-outer-ring > span.indicator[data-state="checked"] {
-    @apply rounded-circle shadow-violet-60 shadow-[0_0_0_2px];
+    @apply rounded-circle shadow-[0_0_0_2px] shadow-violet-60;
   }
 
   .bold-active-item + span {
@@ -178,7 +178,7 @@
 
 @layer components {
   .react-select-container {
-    @apply p-0 -mx-3 border-0 mb-1 cursor-text h-6;
+    @apply -mx-3 mb-1 h-6 cursor-text border-0 p-0;
 
     .react-select__control {
       @apply border-0 bg-inherit shadow-none;
@@ -187,17 +187,17 @@
     .react-select__control,
     .react-select__control--is-focused,
     .react-select__control--menu-is-open {
-      @apply h-6 p-0 m-0 !important;
+      @apply m-0 h-6 p-0 !important;
     }
 
     .react-select__value-container--is-multi,
     .react-select__value-container--has-value {
-      @apply h-6 pl-3 p-0 m-0 !important;
+      @apply m-0 h-6 p-0 pl-3 !important;
     }
 
     .react-select__menu,
     .react-select__menu-list {
-      @apply rounded-t-none mt-0 z-[110] !important;
+      @apply z-[110] mt-0 rounded-t-none !important;
     }
 
     .react-select__value-container {
@@ -205,7 +205,7 @@
     }
 
     .react-select__indicators {
-      @apply p-0 h-full items-center flex pr-3;
+      @apply flex h-full items-center p-0 pr-3;
 
       .react-select__indicator {
         @apply p-0;
@@ -213,7 +213,7 @@
     }
 
     .react-select__input {
-      @apply w-full mt-0 min-w-[120px] pt-0 !important;
+      @apply mt-0 w-full min-w-[120px] pt-0 !important;
     }
 
     .react-select__option,
@@ -231,7 +231,7 @@
 
 @layer components {
   .badge {
-    @apply w-min py-0.5 px-2 rounded-rounded inter-small-semibold;
+    @apply inter-small-semibold w-min rounded-rounded py-0.5 px-2;
   }
 
   .badge-disabled {
@@ -255,15 +255,15 @@
   }
 
   .badge-ghost {
-    @apply text-grey-90 border border-grey-20 whitespace-nowrap;
+    @apply whitespace-nowrap border border-grey-20 text-grey-90;
   }
 
   .badge-default {
-    @apply inter-small-regular bg-grey-10 text-grey-90 whitespace-nowrap;
+    @apply inter-small-regular whitespace-nowrap bg-grey-10 text-grey-90;
   }
 
   .btn {
-    @apply flex items-center justify-center rounded-rounded focus:outline-none focus:shadow-cta;
+    @apply flex items-center justify-center rounded-rounded focus:shadow-cta focus:outline-none;
   }
 
   .btn-large {
@@ -283,11 +283,11 @@
   }
 
   .btn-secondary {
-    @apply bg-grey-0 text-grey-90 border border-grey-20 hover:bg-grey-5 active:bg-grey-5 active:text-violet-60  focus:border-violet-60 disabled:bg-grey-0 disabled:text-grey-30;
+    @apply border border-grey-20 bg-grey-0 text-grey-90 hover:bg-grey-5 focus:border-violet-60 active:bg-grey-5  active:text-violet-60 disabled:bg-grey-0 disabled:text-grey-30;
   }
 
   .btn-danger {
-    @apply bg-grey-0 text-rose-50 border border-grey-20 hover:bg-grey-10 active:bg-grey-20 disabled:bg-grey-0 disabled:text-grey-30;
+    @apply border border-grey-20 bg-grey-0 text-rose-50 hover:bg-grey-10 active:bg-grey-20 disabled:bg-grey-0 disabled:text-grey-30;
   }
 
   .btn-nuclear {
@@ -295,7 +295,7 @@
   }
 
   .btn-ghost {
-    @apply bg-transparent text-grey-90 hover:bg-grey-5 active:bg-grey-5 active:text-violet-60  focus:border-violet-60 disabled:bg-transparent disabled:text-grey-30;
+    @apply bg-transparent text-grey-90 hover:bg-grey-5 focus:border-violet-60 active:bg-grey-5  active:text-violet-60 disabled:bg-transparent disabled:text-grey-30;
   }
 
   .btn-primary-large {
@@ -329,11 +329,11 @@
 
 @layer components {
   .date-picker {
-    @apply border-0 outline-none pt-6 !important;
+    @apply border-0 pt-6 outline-none !important;
 
     .react-datepicker__month-container {
       .react-datepicker__header {
-        @apply bg-inherit border-0;
+        @apply border-0 bg-inherit;
       }
     }
 
@@ -341,7 +341,7 @@
       @apply inter-base-semibold pt-4;
 
       .react-datepicker__day-name {
-        @apply w-[40px] m-0;
+        @apply m-0 w-[40px];
       }
     }
 
@@ -352,7 +352,7 @@
       @apply inter-base-regular;
     }
     .react-datepicker__day--today {
-      @apply text-grey-90 inter-base-semibold bg-grey-10 rounded !important;
+      @apply inter-base-semibold rounded bg-grey-10 text-grey-90 !important;
     }
 
     .react-datepicker__day--outside-month,
@@ -361,14 +361,14 @@
     }
 
     .date {
-      @apply text-grey-90 m-[0px] w-[38px] h-[38px] align-middle relative leading-none pt-3;
+      @apply relative m-[0px] h-[38px] w-[38px] pt-3 align-middle leading-none text-grey-90;
       :hover {
         @apply cursor-pointer;
       }
     }
     .chosen,
     .react-datepicker__day--keyboard-selected {
-      @apply bg-violet-60 text-grey-0 inter-base-semibold leading-none !important;
+      @apply inter-base-semibold bg-violet-60 leading-none text-grey-0 !important;
     }
   }
 

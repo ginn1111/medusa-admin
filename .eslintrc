@@ -8,11 +8,14 @@
     "sourceType": "module" // Allows for the use of imports
   },
   "plugins": [
+    "plugin:prettier/recommend",
     "eslint-plugin-prettier",
     "unused-imports",
     "react",
     "@typescript-eslint",
-    "react-hooks"
+    "@typescript-eslint/eslint-plugin",
+    "react-hooks",
+    "@typescript-eslint/parser"
   ],
   "extends": [
     "eslint:recommended",
@@ -24,7 +27,13 @@
     "__MEDUSA_BACKEND_URL__": true
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "parser": "flow"
+      }
+    ],
     "curly": [2, "all"],
     "new-cap": "off",
     "require-jsdoc": "off",
@@ -33,7 +42,13 @@
     "no-unused-expressions": "off",
     "camelcase": "off",
     "no-invalid-this": "off",
-    "spaced-comment": ["error", "always", { "markers": ["/"] }],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": ["/"]
+      }
+    ],
     "react/prop-types": "off", // Disable prop-types as we use TypeScript for type checking
     "react-hooks/rules-of-hooks": 1, // Checks rules of Hooks
     "react-hooks/exhaustive-deps": 1, // Checks effect dependencies

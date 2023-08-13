@@ -44,13 +44,13 @@ const AddVariantModal = ({ open, onClose, product }: Props) => {
         <Modal.Header handleClose={resetAndClose}>
           <h1 className="inter-xlarge-semibold">Add Variant</h1>
         </Modal.Header>
-        {hasOptions ?
+        {hasOptions ? (
           <form onSubmit={onSubmit}>
             <Modal.Content>
               <EditFlowVariantForm form={form} />
             </Modal.Content>
             <Modal.Footer>
-              <div className="flex items-center gap-x-xsmall justify-end w-full">
+              <div className="flex w-full items-center justify-end gap-x-xsmall">
                 <Button
                   variant="secondary"
                   size="small"
@@ -70,11 +70,13 @@ const AddVariantModal = ({ open, onClose, product }: Props) => {
               </div>
             </Modal.Footer>
           </form>
-          :
+        ) : (
           <Modal.Content>
-            <h4 className="text-rose-500 text-md font-semibold">Please add at least a option!</h4>
+            <h4 className="text-md font-semibold text-rose-500">
+              Please add at least a option!
+            </h4>
           </Modal.Content>
-        }
+        )}
       </Modal.Body>
     </Modal>
   )

@@ -9,6 +9,7 @@ import { capitalize, sum } from "lodash"
 import {
   useAdminCancelOrder,
   useAdminCapturePayment,
+  useAdminGetSession,
   useAdminOrder,
   useAdminRegion,
   useAdminUpdateOrder,
@@ -125,6 +126,8 @@ const gatherAllFulfillments = (order) => {
 
 const OrderDetails = () => {
   const { id } = useParams()
+  const { user } = useAdminGetSession()
+  console.log(user?.role)
 
   const { isFeatureEnabled } = React.useContext(FeatureFlagContext)
   const dialog = useImperativeDialog()
@@ -271,8 +274,8 @@ const OrderDetails = () => {
   //   })
   // }
 
-
-  const canCancel = order?.status === "pending" && order?.payment_status === 'awaiting'
+  const canCancel =
+    order?.status === "pending" && order?.payment_status === "awaiting"
 
   if (!order && isLoading) {
     return (
@@ -320,14 +323,15 @@ const OrderDetails = () => {
                   status={<OrderStatusComponent status={order.status} />}
                   forceDropdown={canCancel}
                   actionables={
-                    canCancel ? [
-                      {
-                        label: "Cancel Order",
-                        icon: <CancelIcon size={"20"} />,
-                        variant: "danger",
-                        onClick: () => handleDeleteOrder(),
-                      },
-                    ]
+                    canCancel
+                      ? [
+                          {
+                            label: "Cancel Order",
+                            icon: <CancelIcon size={"20"} />,
+                            variant: "danger",
+                            onClick: () => handleDeleteOrder(),
+                          },
+                        ]
                       : []
                   }
                 >
@@ -370,11 +374,11 @@ const OrderDetails = () => {
                       actionables={
                         isFeatureEnabled("order_editing")
                           ? [
-                            {
-                              label: "Edit Order",
-                              onClick: showModal,
-                            },
-                          ]
+                              {
+                                label: "Edit Order",
+                                onClick: showModal,
+                              },
+                            ]
                           : undefined
                       }
                     >
@@ -604,7 +608,7 @@ const OrderDetails = () => {
                             {order.shipping_address.city},{" "}
                             {
                               isoAlpha2Countries[
-                              order.shipping_address.country_code?.toUpperCase()
+                                order.shipping_address.country_code?.toUpperCase()
                               ]
                             }
                           </span>
@@ -632,7 +636,7 @@ const OrderDetails = () => {
                     </div>
                   </div>
                 </BodyCard>
-                {/* <RawJSON data={order} title="Raw order" /> */}
+                <RawJSON data={order} title="Raw order" />
               </div>
             </div>
             {addressModal && (
