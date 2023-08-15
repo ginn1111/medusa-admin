@@ -78,6 +78,12 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
     return updating || creating || deleting
   }, [updating, creating, deleting])
 
+  const handleSuccess = () => {
+    refetch()
+    notification("Success", "Successfully updated product options", "success")
+    handleClose()
+  }
+
   const onSubmit = handleSubmit((data) => {
     const errors: string[] = []
 
@@ -103,6 +109,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
         {
           onError: () => {
             errors.push(`create ${option.title}`)
+            notification("Error", "Create option failed!", "error")
           },
           onSuccess: () => {
             refetch()
@@ -120,6 +127,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
         {
           onError: () => {
             errors.push(`update ${option.title}`)
+            notification("Error", "Update option failed!", "error")
           },
           onSuccess: () => {
             refetch()
@@ -132,9 +140,10 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
       del(option.id!, {
         onError: () => {
           errors.push(`delete ${option.title}`)
+          notification("Error", "You must delete all variant of option", "error")
         },
         onSuccess: () => {
-          refetch()
+          handleSuccess()
         },
       })
     })
@@ -152,23 +161,9 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
       )
     }
 
-    refetch()
-    notification("Success", "Successfully updated product options", "success")
     handleClose()
   })
 
-  const canDeleteOption = (optionId: string) => {
-    const variants = product.variants
-    if (!variants?.length) {
-      return true
-    }
-
-    return variants.some((variant) => {
-      return variant.options.findIndex(
-        (option) => option.option_id === optionId
-      )
-    })
-  }
 
   return (
     <Modal open={open} handleClose={handleClose}>
@@ -204,7 +199,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
                         className="max-h-[40px] px-2.5 py-2.5"
                         type="button"
                         onClick={() => remove(index)}
-                        disabled={!canDeleteOption(product.options[index]?.id)}
+
                       >
                         <TrashIcon className="text-grey-40" size="20" />
                       </Button>

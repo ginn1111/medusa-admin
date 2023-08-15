@@ -274,8 +274,8 @@ const OrderDetails = () => {
   //   })
   // }
 
-  const canCancel =
-    order?.status === "pending" && order?.payment_status === "awaiting"
+  const canCancel = order?.status === "pending"
+  // && order?.payment_status === "awaiting"
 
   if (!order && isLoading) {
     return (
@@ -491,30 +491,30 @@ const OrderDetails = () => {
                                 "DD MMM YYYY hh:mm"
                               )}`}
                             />
-                            {/* {!!payment.amount_refunded && (
-                          <div className="mt-4 flex justify-between">
-                            <div className="flex">
-                              <div className="mr-2 text-grey-40">
-                                <CornerDownRightIcon />
+                            {!!payment.amount_refunded && (
+                              <div className="mt-4 flex justify-between">
+                                <div className="flex">
+                                  <div className="mr-2 text-grey-40">
+                                    <CornerDownRightIcon />
+                                  </div>
+                                  <div className="inter-small-regular text-grey-90">
+                                    Refunded
+                                  </div>
+                                </div>
+                                <div className="flex">
+                                  <div className="inter-small-regular mr-3 text-grey-90">
+                                    -
+                                    {formatAmountWithSymbol({
+                                      amount: payment.amount_refunded,
+                                      currency: order.currency_code,
+                                    })}
+                                  </div>
+                                  <div className="inter-small-regular text-grey-50">
+                                    {order.currency_code.toUpperCase()}
+                                  </div>
+                                </div>
                               </div>
-                              <div className="inter-small-regular text-grey-90">
-                                Refunded
-                              </div>
-                            </div>
-                            <div className="flex">
-                              <div className="inter-small-regular mr-3 text-grey-90">
-                                -
-                                {formatAmountWithSymbol({
-                                  amount: payment.amount_refunded,
-                                  currency: order.currency_code,
-                                })}
-                              </div>
-                              <div className="inter-small-regular text-grey-50">
-                                {order.currency_code.toUpperCase()}
-                              </div>
-                            </div>
-                          </div>
-                        )} */}
+                            )}
                           </div>
                         ))}
                         <div className="mt-4 flex justify-between">
@@ -566,9 +566,9 @@ const OrderDetails = () => {
                             <span className="inter-small-regular mt-2 text-grey-90">
                               {method?.shipping_option?.name || ""}
                             </span>
-                            {/* <div className="mt-4 flex w-full flex-grow items-center">
-                          <JSONView data={method?.data} />
-                        </div> */}
+                            <div className="mt-4 flex w-full flex-grow items-center">
+                              <JSONView data={method?.data} />
+                            </div>
                           </div>
                         ))}
                         <div className="inter-small-regular mt-6 ">

@@ -37,17 +37,17 @@ export const PaymentActionables = ({
   }
 
   switch (true) {
-    // case payment_status === "captured" ||
-    //   payment_status === "partially_refunded": {
-    //   label = "Refund"
-    //   action = () => showRefundMenu()
-    //   break
-    // }
+    case payment_status === "captured" ||
+      payment_status === "partially_refunded": {
+        label = "Refund"
+        action = () => showRefundMenu()
+        break
+      }
 
     case payment_status === "captured" ||
       payment_status === "partially_refunded": {
-      return null
-    }
+        return null
+      }
 
     case shouldShowNotice: {
       action = () =>
@@ -58,6 +58,10 @@ export const PaymentActionables = ({
     }
 
     case payment_status === "requires_action": {
+      return null
+    }
+
+    case payment_status === 'refunded': {
       return null
     }
     default:

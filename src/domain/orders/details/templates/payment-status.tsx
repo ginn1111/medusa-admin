@@ -4,6 +4,11 @@ import StatusDot from "../../../../components/fundamentals/status-indicator"
 
 export const PaymentStatusComponent = ({ status }) => {
   switch (status) {
+
+    case "refunded":
+      return <StatusDot title="Refunded" variant="warning" />
+    case "partially_refunded":
+      return <StatusDot title="Refunded" variant="warning" />
     case "captured":
       return <StatusDot title="Paid" variant="success" />
     case "awaiting":
